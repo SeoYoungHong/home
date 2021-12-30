@@ -42,7 +42,12 @@ class DNN(nn.Module):
         out = self.output_layer(out)
         return out
 
-device = 'cuda'
+device = 'cuda'# if torch.cuda.is_available() else 'cpu'
+if torch.cuda.is_available():
+    print('cuda') 
+else:
+    print('cpu') 
+
 
 model = DNN(784).to(device)
 criterion = nn.CrossEntropyLoss()
