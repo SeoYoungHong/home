@@ -31,7 +31,6 @@ class NeuralNetwork(nn.Module):
         out = self.sigmoid(out)
         return out
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model = NeuralNetwork(30)
 criterion = nn.BCELoss()
 optimizer = optim.SGD(model.parameters(), lr=0.1)
