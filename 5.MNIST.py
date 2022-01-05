@@ -13,14 +13,19 @@ path = './'
 train_dataset = datasets.MNIST(path, train=True, download=True)
 train_dataset = datasets.MNIST(path, train=False, download=True)
 
+#정규화과정이다. 흑백데이터는 픽셀값으로 0에서 255의 값을 갖는데 225로
+#나눠 0에서 1사이 값을 갖도록 정규화 한 것이다.
 X_train, y_train = train_dataset.data / 255, train_dataset.targets
 X_test, y_test = train_dataset.data / 255, train_dataset.targets
-
+#자료의 구조를 보면 6000,28,28의 자료 형태를 갖는다. 하습 시키기 위해 
+#2차원 배열으로 변환해야 하는데 28*28=784를 속성의 개수로 만들어준다
+#view(-1,784)는 1차원은 알아서 하고 2차원을 784로 하라는 의미이다. 
 X_train, X_test = X_train.view(-1, 784), X_test.view(-1, 784)
 
 train_dset = TensorDataset(X_train, y_train)
 test_dset= TensorDataset(X_test, y_test)
 
+#컴퓨터의 한계 때문에 각각의 학습데이터를 배치 단위로 나눠서 연산을 한다.
 train_loader = DataLoader(train_dset,  batch_size=32, shuffle=True)
 test_loader = DataLoader(test_dset,  batch_size=32, shuffle=False)
 
@@ -42,11 +47,8 @@ class DNN(nn.Module):
         out = self.output_layer(out)
         return out
 
-device = 'cuda'# if torch.cuda.is_available() else 'cpu'
-if torch.cuda.is_available():
-    print('cuda') 
-else:
-    print('cpu') 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(f'Using {device} device')
 
 
 model = DNN(784).to(device)
