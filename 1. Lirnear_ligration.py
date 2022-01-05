@@ -2,6 +2,8 @@ from sklearn import datasets
 import torch
 import torch.nn as nn #다양한 알고리즘이 있음
 import torch.optim as optim #옵티마이저(에러를 최적화하는 방법)
+import pandas as pd
+import numpy as np
 
 dataset = datasets.load_boston()
 X, y = dataset['data'], dataset['target']
