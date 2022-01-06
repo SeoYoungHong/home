@@ -26,8 +26,8 @@ train_dset = TensorDataset(X_train, y_train)
 test_dset= TensorDataset(X_test, y_test)
 
 #컴퓨터의 한계 때문에 각각의 학습데이터를 배치 단위로 나눠서 연산을 한다.
-train_loader = DataLoader(train_dset,  batch_size=32, shuffle=True)
-test_loader = DataLoader(test_dset,  batch_size=32, shuffle=False)
+train_loader = DataLoader(train_dset,  batch_size=30, shuffle=True)
+test_loader = DataLoader(test_dset,  batch_size=30, shuffle=False)
 
 class DNN(nn.Module):
     def __init__(self, num_features):
@@ -47,7 +47,7 @@ class DNN(nn.Module):
         out = self.output_layer(out)
         return out
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
+device = 'cpu' if torch.cuda.is_available() else 'cpu'
 print(f'Using {device} device')
 
 
@@ -75,5 +75,4 @@ def train(model, criterion, optimizer, loader):
 n_epoch = 20
 for epoch in range(0,n_epoch+1):
     loss, acc = train(model, criterion, optimizer, train_loader)
-    if epoch % 10 == 0:
-        print('epoch: {}, loss: {}, acc;{}'.format(epoch, loss, acc))  
+    print('epoch: {}, loss: {}, acc;{}'.format(epoch, loss, acc))  
